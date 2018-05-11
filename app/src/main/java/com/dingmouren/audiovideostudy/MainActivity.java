@@ -10,7 +10,7 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity {
 
-    // Used to load the 'native-lib' library on application startup.
+    // 要在哪个类运用 JNI ，就得加载相应的动态库（本地）
     static {
         System.loadLibrary("native-lib");
     }
@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
+     * 本地方法，在cpp文件中定义的
      */
     public native String stringFromJNI();
+
+
 }
