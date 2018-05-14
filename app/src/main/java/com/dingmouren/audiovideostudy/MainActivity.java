@@ -1,8 +1,15 @@
 package com.dingmouren.audiovideostudy;
 
+import android.content.Intent;
+import android.media.AudioFormat;
+import android.media.MediaRecorder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+
+import com.dingmouren.audiovideostudy.audio.AudioRecordActivity;
+
 /**
  * Created by 钉某人
  * github: https://github.com/DingMouRen
@@ -10,7 +17,7 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity {
 
-    // Used to load the 'native-lib' library on application startup.
+    // 要在哪个类运用 JNI ，就得加载相应的动态库（本地）
     static {
         System.loadLibrary("native-lib");
     }
@@ -19,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
@@ -28,6 +34,16 @@ public class MainActivity extends AppCompatActivity {
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
+     * 本地方法，在cpp文件中定义的
      */
     public native String stringFromJNI();
+
+
+    /**
+     * \录制音频
+     * @param view
+     */
+    public void audioData(View view){
+        startActivity(new Intent(MainActivity.this, AudioRecordActivity.class));
+    }
 }
