@@ -4,6 +4,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
+import android.util.Log;
 
 import com.dingmouren.audiovideostudy.audio.exception.AudioConfigurationException;
 
@@ -72,7 +73,9 @@ public class AudioTrackManager {
     /**
      * 开始播放录音
      */
-    public void play(String filePath){
+    public synchronized void play(String filePath){
+        Log.e(TAG,"播放状态："+mAudioTrack.getState());
+        if (mIsPlaying) return;
         if (null != mAudioTrack && mAudioTrack.getState() == AudioTrack.STATE_INITIALIZED){
             mAudioTrack.play();
         }

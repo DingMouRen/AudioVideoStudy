@@ -91,6 +91,7 @@ public class AudioRecordActivity extends AppCompatActivity {
      * 开始和结束录音
      */
     private void recordAndStop() throws AudioStartRecordingException {
+        Log.e(TAG,"在录音吗:"+mAudioRecordManager.isRecording());
         if (mAudioRecordManager.isRecording()){//正在录音--》停止录音
             mBtnRecord.setText("开始录音");
             mAudioRecordManager.stopRecord();

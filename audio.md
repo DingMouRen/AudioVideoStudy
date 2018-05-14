@@ -1,4 +1,4 @@
-### 音频采集AudioRecord工作流程
+### 音频采集AudioRecord工作流程(PCM)
 1.配置参数、初始化内部的音频缓冲区
 AudioRecord的构造函数如下：
 ```
@@ -34,4 +34,4 @@ public int read(short[] audioData,int offsetInShorts,int sizeInShorts);
 4.停止采集，释放资源
 先读取数据再结束线程，再通过stop停止录音，通过release释放录音器，然后关闭io流。
 
-### 
+### 音频采集AudioTrack工作流程(PCM)

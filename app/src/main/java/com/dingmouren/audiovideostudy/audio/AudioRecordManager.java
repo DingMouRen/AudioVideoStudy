@@ -32,8 +32,8 @@ public class AudioRecordManager {
     private static int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
     /*音频采集的采样频率*/
     public static int SAMPLE_RATE_IN_HZ = 44100;
-    /*音频采集的声道数,此处为单声道，后期处理可以转换成双声道的立体声*/
-    private static int CHANNEL_CONFIGURATION = AudioFormat.CHANNEL_IN_MONO;
+    /*音频采集的声道数,此处为单声道，后期处理可以转换成双声道的立体声,如果这里是MONO声道的话，会有变声的情况*/
+    private static int CHANNEL_CONFIGURATION = AudioFormat.CHANNEL_IN_STEREO;
     /*音频采集的格式，数据位宽16位*/
     private static final int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
     /*音频缓冲区大小*/
