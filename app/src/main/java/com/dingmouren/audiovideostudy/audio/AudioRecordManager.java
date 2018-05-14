@@ -9,6 +9,7 @@ import android.util.Log;
 import com.dingmouren.audiovideostudy.audio.exception.AudioConfigurationException;
 import com.dingmouren.audiovideostudy.audio.exception.AudioStartRecordingException;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,12 +29,12 @@ public class AudioRecordManager {
     /*录音线程*/
     private Thread mRecordThread;
     /*音频采集的输入源，麦克风*/
-    private int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
+    private static int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
     /*音频采集的采样频率*/
     public static int SAMPLE_RATE_IN_HZ = 44100;
     /*音频采集的声道数,此处为单声道，后期处理可以转换成双声道的立体声*/
     private static int CHANNEL_CONFIGURATION = AudioFormat.CHANNEL_IN_MONO;
-    /*音频采集的格式，16位*/
+    /*音频采集的格式，数据位宽16位*/
     private static final int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
     /*音频缓冲区大小*/
     private int mBufferSizeInBytes = 0;
@@ -44,9 +45,8 @@ public class AudioRecordManager {
     /*文件输出路径*/
     private String mOutputFilePath;
 
-    private AudioRecordManager(){}
-
     /*单例模式*/
+    private AudioRecordManager(){}
     public static AudioRecordManager getInstance(){
         if (null == sInstance){
             synchronized (AudioRecordManager.class){
@@ -75,7 +75,7 @@ public class AudioRecordManager {
             Log.e(TAG,"采样率44.1kHZ的AudioRecord初始化失败");
         }
 
-        //44.1kHz采样率没有成功的话，再使用16kHz的采样率初始化录音器
+/*        //44.1kHz采样率没有成功的话，再使用16kHz的采样率初始化录音器
         if (mAudioRecord == null || mAudioRecord.getState() != AudioRecord.STATE_INITIALIZED){
             try {
                 SAMPLE_RATE_IN_HZ = 16000;
@@ -85,7 +85,7 @@ public class AudioRecordManager {
                 e.printStackTrace();
                 Log.e(TAG,"采样率16kHZ的AudioRecord初始化失败");
             }
-        }
+        }*/
 
         //都失败的话，抛出异常
         if (mAudioRecord == null || mAudioRecord.getState() != AudioRecord.STATE_INITIALIZED) throw new AudioConfigurationException();
@@ -108,7 +108,7 @@ public class AudioRecordManager {
         }
 
         mIsRecording = true;
-        mRecordThread = new Thread(new RecordThread(),"RecordThread");
+        mRecordThread = new Thread(new RecordRunnable(),"RecordThread");
 
         try {
             this.mOutputFilePath = filePath;
@@ -150,13 +150,15 @@ public class AudioRecordManager {
      * 关闭录音，释放资源
      */
     private void releaseAudioRecord(){
-        if (mAudioRecord.getState() == AudioRecord.STATE_INITIALIZED) mAudioRecord.stop();
-        mAudioRecord.release();
-        mAudioRecord = null;
+        if (mAudioRecord.getState() == AudioRecord.STATE_INITIALIZED) {
+            mAudioRecord.stop();
+            mAudioRecord.release();
+            mAudioRecord = null;
+        }
     }
 
 
-    class RecordThread implements Runnable{
+    class RecordRunnable implements Runnable{
         @Override
         public void run() {
             try {
@@ -164,7 +166,11 @@ public class AudioRecordManager {
                 byte[] audioDataArray = new byte[mBufferSizeInBytes];
                 while (mIsRecording){
                     int audioDataSize = getAudioRecordBufferSize(mBufferSizeInBytes,audioDataArray);
-                    if (audioDataSize > 0) mFileOutputStream.write(audioDataArray);
+                    if (audioDataSize > 0) {
+                        mFileOutputStream.write(audioDataArray);
+                    }else {
+                        mIsRecording = false;
+                    }
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
