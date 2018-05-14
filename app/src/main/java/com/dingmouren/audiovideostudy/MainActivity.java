@@ -1,10 +1,15 @@
 package com.dingmouren.audiovideostudy;
 
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.MediaRecorder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+
+import com.dingmouren.audiovideostudy.audio.AudioRecordActivity;
+
 /**
  * Created by 钉某人
  * github: https://github.com/DingMouRen
@@ -34,4 +39,11 @@ public class MainActivity extends AppCompatActivity {
     public native String stringFromJNI();
 
 
+    /**
+     * \录制音频
+     * @param view
+     */
+    public void audioData(View view){
+        startActivity(new Intent(MainActivity.this, AudioRecordActivity.class));
+    }
 }
