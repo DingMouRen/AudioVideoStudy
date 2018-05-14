@@ -9,7 +9,7 @@ public AudioRecord(int audioSource, int sampleRateInHz, int channelConfig, int a
 * samleRateInHz:用于指定以多大的采样频率来采集音频。44.1Hz可以应用于所有手机，有的频率手机不支持。
 * channelConfig:用于指定录音器采集几个声道的声音。可选值以常量的形式定义在AudioFormat中。常用的值：CHANNEL_IN_MONO(单声道)、CHANNEL_IN_STEREO(立体声，也就是双声道)。出于性能考虑，一般按照单声道采集，然后在后期的处理中将数据转换成立体声。
 * audioFormat:指采样的表示格式。可选值以常量值得形式定义在AudioFormat，常用值：ENCODING_PCM_16BIT(16位)、ENCODING_PCM_8BIT(8位)。16位可以兼容绝大部分手机。
-* bufferSizeInBytes：是AudioRecord内部的音频缓冲区的大小。获取音频缓冲区大小
+* bufferSizeInBytes:是AudioRecord内部的音频缓冲区的大小。获取音频缓冲区大小
 ```
 public int getMinBufferSize(int sampleRateInHz,int channelConfig,int audioFormat);
 ```
