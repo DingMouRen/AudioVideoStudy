@@ -94,6 +94,9 @@ public class AudioTrackManager {
 
                 mIsPlaying = false;
 
+                //首先停止播放
+                mAudioTrack.stop();
+
                 //关闭线程
                 try {
                     if (mPlayingThread != null){
@@ -104,7 +107,7 @@ public class AudioTrackManager {
                     e.printStackTrace();
                 }
 
-                //关闭录音，释放资源
+                //释放资源
                 releaseAudioTrack();
             }
         } catch (Exception e) {
@@ -113,11 +116,10 @@ public class AudioTrackManager {
     }
 
     /**
-     * 关闭录音，释放资源
+     * 释放资源
      */
     private void releaseAudioTrack(){
         if (mAudioTrack.getState() == AudioRecord.STATE_INITIALIZED) {
-            mAudioTrack.stop();
             mAudioTrack.release();
             mAudioTrack = null;
         }
