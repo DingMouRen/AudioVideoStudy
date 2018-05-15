@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dingmouren.audiovideostudy.R;
+import com.dingmouren.audiovideostudy.audio.androidapi.AudioRecordManager;
+import com.dingmouren.audiovideostudy.audio.androidapi.AudioTrackManager;
 import com.dingmouren.audiovideostudy.audio.exception.AudioConfigurationException;
 import com.dingmouren.audiovideostudy.audio.exception.AudioStartRecordingException;
 
