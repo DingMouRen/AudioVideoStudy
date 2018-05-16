@@ -39,6 +39,7 @@ public class AudioRecordActivity extends AppCompatActivity {
     private String mFilePath = Environment.getExternalStorageDirectory()+"/audio.pcm";
     private int mTimerTime = 0;//计时的时间，单位是秒
     private TimerTask mTimerTask;
+    private boolean mIsRecording = false;//是否正在录音
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,11 +95,12 @@ public class AudioRecordActivity extends AppCompatActivity {
      */
     private void recordAndStop() throws AudioStartRecordingException {
         Log.e(TAG,"在录音吗:"+mAudioRecordManager.isRecording());
-        if (mAudioRecordManager.isRecording()){//正在录音--》停止录音
+        if (mIsRecording){//正在录音--》停止录音
             mBtnRecord.setText("开始录音");
             mAudioRecordManager.stopRecord();
             mTimerTask.cancel();
             mTimer.cancel();
+            mIsRecording = false;
         }else {//空闲--》开始录音
             mBtnRecord.setText("停止录音");
             mAudioRecordManager.startRecord(mFilePath);
@@ -111,6 +113,7 @@ public class AudioRecordActivity extends AppCompatActivity {
                 }
             };
             mTimer.schedule(mTimerTask,0,1000);
+            mIsRecording = true;
         }
     }
 

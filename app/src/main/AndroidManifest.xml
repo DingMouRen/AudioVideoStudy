@@ -21,7 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".audio.AudioRecordActivity"/>
+        <activity android:name=".audio.AudioRecordActivity"
+            android:theme="@style/StyleNoActionBar"
+            />
+        <activity android:name=".audio.OpenSLActivity"
+            android:theme="@style/StyleNoActionBar"
+            />
     </application>
 
 </manifest>

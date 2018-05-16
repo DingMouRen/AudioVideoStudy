@@ -14,7 +14,9 @@ add_library( # 设置库的名称
              SHARED
 
              # 提供您的源文件的相对路径
-             src/main/cpp/native-lib.cpp )
+             src/main/cpp/native-lib.cpp
+             src/main/cpp/RecordBuffer.cpp
+             )
 
 # 搜索指定的预建库，并将路径存储为变量。由于CMake通过default在搜索路径中包含系统库，因此您只需指定要添加的公共NDK库的名称即可。 CMake在完成构建之前验证该库是否存在
 # 依赖NDK中的库
