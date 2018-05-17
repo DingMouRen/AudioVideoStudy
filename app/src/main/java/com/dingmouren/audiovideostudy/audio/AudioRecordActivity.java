@@ -34,28 +34,21 @@ public class AudioRecordActivity extends AppCompatActivity {
     private Button mBtnRecord;
     private Button mBtnPlay;
     private Timer mTimer;//计时器
-    private AudioRecordManager mAudioRecordManager;
-    private AudioTrackManager mAudioTrackManager;
     private String mFilePath = Environment.getExternalStorageDirectory()+"/audio.pcm";
     private int mTimerTime = 0;//计时的时间，单位是秒
     private TimerTask mTimerTask;
     private boolean mIsRecording = false;//是否正在录音
+
+    private AudioRecordManager mAudioRecordManager;
+    private AudioTrackManager mAudioTrackManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_record);
 
-        mTimer = new Timer();
-        try {
-            mAudioRecordManager = AudioRecordManager.getInstance();
-            mAudioRecordManager.initConfig();
-            mAudioTrackManager = AudioTrackManager.getInstance();
-            mAudioTrackManager.initConfig();
-        } catch (AudioConfigurationException e) {
-            e.printStackTrace();
-            Log.e(TAG,e.getMessage());
-        }
+        mAudioRecordManager = AudioRecordManager.getInstance();
+        mAudioTrackManager = AudioTrackManager.getInstance();
 
         initView();
 
@@ -79,13 +72,19 @@ public class AudioRecordActivity extends AppCompatActivity {
                     recordAndStop();
                 } catch (AudioStartRecordingException e) {
                     e.printStackTrace();
+                } catch (AudioConfigurationException e) {
+                    e.printStackTrace();
                 }
             }
         });
         mBtnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playRecordFile();
+                try {
+                    playRecordFile();
+                } catch (AudioConfigurationException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -93,7 +92,7 @@ public class AudioRecordActivity extends AppCompatActivity {
     /**
      * 开始和结束录音
      */
-    private void recordAndStop() throws AudioStartRecordingException {
+    private void recordAndStop() throws AudioStartRecordingException, AudioConfigurationException {
         Log.e(TAG,"在录音吗:"+mAudioRecordManager.isRecording());
         if (mIsRecording){//正在录音--》停止录音
             mBtnRecord.setText("开始录音");
@@ -103,6 +102,7 @@ public class AudioRecordActivity extends AppCompatActivity {
             mIsRecording = false;
         }else {//空闲--》开始录音
             mBtnRecord.setText("停止录音");
+            mAudioRecordManager.initConfig();
             mAudioRecordManager.startRecord(mFilePath);
             mTimerTime = 0;//初始化计时时间
             mTimerTask = new TimerTask() {
@@ -112,6 +112,7 @@ public class AudioRecordActivity extends AppCompatActivity {
                     mTimerTime++;
                 }
             };
+            mTimer = new Timer();
             mTimer.schedule(mTimerTask,0,1000);
             mIsRecording = true;
         }
@@ -121,7 +122,8 @@ public class AudioRecordActivity extends AppCompatActivity {
     /**
      * 播放录音文件
      */
-    private void playRecordFile(){
+    private void playRecordFile() throws AudioConfigurationException {
+        mAudioTrackManager.initConfig();
         mAudioTrackManager.play(mFilePath);
     }
 

@@ -30,6 +30,7 @@ find_library( # 设置路径变量的名称。
 # 将目标库与NDK中的库进行连接
 target_link_libraries( # 指定目标库
                        native-lib
-
+                        OpenSLES
+                        android
                        # 将目标库链接到NDK中包含的日志库
                        ${log-lib} )

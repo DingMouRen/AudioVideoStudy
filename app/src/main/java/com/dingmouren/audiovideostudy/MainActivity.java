@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dingmouren.audiovideostudy.audio.AudioRecordActivity;
+import com.dingmouren.audiovideostudy.audio.OpenSLActivity;
 
 /**
  * Created by 钉某人
@@ -40,10 +41,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * \录制音频
+     * AudioRecord 与AudioTrack的录制和播放pcm音频
      * @param view
      */
     public void audioData(View view){
         startActivity(new Intent(MainActivity.this, AudioRecordActivity.class));
+    }
+
+
+    /**
+     * OpenSL的录制和播放pcm音频
+     * @param view
+     */
+    public void audioDataSL(View view){
+        startActivity(new Intent(MainActivity.this, OpenSLActivity.class));
     }
 }

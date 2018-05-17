@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="StyleNoActionBar" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <!--用于解决TexView的大小写问题-->
+    <style name="StyleTextView">
+        <item name="android:textSize">13sp</item>
+    </style>
 </resources>

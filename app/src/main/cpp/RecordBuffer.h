@@ -8,9 +8,9 @@ public:
 public:
     RecordBuffer(int buffersize);
     ~RecordBuffer();//析构函数，会在每次删除所创建的对象时执行，用于跳出程序前释放资源，比如关闭文件、释放内存等
-    /*得到一个新的录制buffer*/
+    /*得到一个新的录制buffer,是即将录入PCM数据的buffer*/
     short* getRecordBuffer();
-    /*得到当前录制的buffer*/
+    /*得到当前录制的buffer,是当前录制好的PCM数据的buffer,可以写入文件，也就是我们得到的PCM数据*/
     short* getNowBuffer();//short*是指将short类型转成指针
 };
 
