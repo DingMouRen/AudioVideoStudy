@@ -17,7 +17,7 @@ import com.dingmouren.audiovideostudy.audio.OpenSLActivity;
  * email: naildingmouren@gmail.com
  */
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     // 要在哪个类运用 JNI ，就得加载相应的动态库（本地）
     static {
         System.loadLibrary("native-lib");
@@ -28,16 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
+        final TextView tv = (TextView) findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
     }
-
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     * 本地方法，在cpp文件中定义的
-     */
-    public native String stringFromJNI();
 
 
     /**
@@ -56,4 +49,14 @@ public class MainActivity extends AppCompatActivity {
     public void audioDataSL(View view){
         startActivity(new Intent(MainActivity.this, OpenSLActivity.class));
     }
+
+
+
+   // ------------------------------ JNI的本地方法----------------------
+
+    /*JNI的Hello World*/
+    public native String stringFromJNI();
+
+
+
 }

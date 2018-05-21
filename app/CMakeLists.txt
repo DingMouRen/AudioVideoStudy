@@ -9,7 +9,6 @@ cmake_minimum_required(VERSION 3.4.1)
 # 添加自己写的c/c++源文件
 add_library( # 设置库的名称
              native-lib
-
              # 将库设置为共享库
              SHARED
 

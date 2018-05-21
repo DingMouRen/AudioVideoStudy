@@ -9,8 +9,7 @@
  * extern "C"：C语言中已经有了头文件以及它的库，我们在C++中直接使用的话，就用extern "C",如果按照C++的符号进行修饰的话，
  * 在库中就会找不到该符号
  */
-extern "C"
-{
+extern "C" {
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 }
@@ -105,7 +104,7 @@ Java_com_dingmouren_audiovideostudy_audio_OpenSLActivity_rdSound(JNIEnv *env, jo
 
     /*创建引擎对象*/
     result = slCreateEngine(&engineObject, 0, NULL, 0, NULL, NULL);
-    result = (*engineObject)->Realize(engineObject, SL_BOOLEAN_FALSE);
+    result = (*engineObject)->Realize(engineObject, SL_BOOLEAN_FALSE); //Realize（）函数实例化接口
     result = (*engineObject)->GetInterface(engineObject, SL_IID_ENGINE, &engineEngine);
 
     /*s设置IO设备（麦克风）*/

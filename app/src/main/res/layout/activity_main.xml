@@ -35,6 +35,17 @@
         android:gravity="center"
         android:onClick="audioDataSL"
         />
+    <Button
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/StyleTextView"
+        android:text="test"
+        android:gravity="center"
+        android:onClick="test"
+        />
+
 
 
 </LinearLayout>
